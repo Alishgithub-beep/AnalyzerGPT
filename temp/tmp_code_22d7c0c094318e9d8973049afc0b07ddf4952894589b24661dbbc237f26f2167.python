@@ -1,0 +1,11 @@
+import pandas as pd
+
+# Load the CSV file
+df = pd.read_csv('data.csv')
+
+# Get the total number of rows
+total_rows = df.shape[0]
+
+# Print the result
+print(f"Total rows in dataset: {total_rows}")
+print("Task completed: Successfully counted total rows in the dataset")

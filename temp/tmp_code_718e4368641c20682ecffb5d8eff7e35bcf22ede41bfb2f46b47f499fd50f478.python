@@ -1,0 +1,20 @@
+import csv
+
+# Count rows using built-in CSV module
+row_count = 0
+
+try:
+    with open('data.csv', 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        # Count all rows including header
+        row_count = sum(1 for row in reader)
+        
+    print(f"Total rows in dataset: {row_count}")
+    print("Task completed: Successfully counted total rows using CSV module")
+    
+except FileNotFoundError:
+    print("Error: data.csv file not found")
+    print("Task failed: Could not find the data file")
+except Exception as e:
+    print(f"Error reading file: {e}")
+    print("Task failed: Error occurred while reading the file")
