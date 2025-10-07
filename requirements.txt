@@ -7,4 +7,4 @@ openai
 tiktoken
 autogen-ext[docker]
 streamlit
-groq-0.32.0
+groq
