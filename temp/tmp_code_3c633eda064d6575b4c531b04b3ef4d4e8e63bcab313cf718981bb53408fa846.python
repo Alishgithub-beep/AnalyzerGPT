@@ -1,0 +1,56 @@
+import csv
+import matplotlib.pyplot as plt
+
+# Count survivors and deceased
+survived_count = 0
+deceased_count = 0
+
+try:
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        header = next(reader)  # Skip header
+        
+        # Find the index of the Survived column
+        header_list = list(header)
+        survived_index = header_list.index('Survived')
+        
+        # Count survivors and deceased
+        for row in reader:
+            if len(row) > survived_index:
+                if row[survived_index] == '1':
+                    survived_count += 1
+                else:
+                    deceased_count += 1
+        
+        # Create bar chart
+        categories = ['Survived', 'Deceased']
+        counts = [survived_count, deceased_count]
+        colors = ['green', 'red']
+        
+        plt.figure(figsize=(8, 6))
+        bars = plt.bar(categories, counts, color=colors, alpha=0.7)
+        plt.title('Titanic Survival Analysis', fontsize=16, fontweight='bold')
+        plt.ylabel('Number of Passengers', fontsize=12)
+        
+        # Add value labels on top of bars
+        for i, bar in enumerate(bars):
+            plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 5, 
+                    str(counts[i]), ha='center', va='bottom', fontsize=12, fontweight='bold')
+        
+        plt.grid(axis='y', alpha=0.3)
+        plt.tight_layout()
+        plt.savefig('output.png')
+        plt.show()
+        
+        print(f"Survived: {survived_count}")
+        print(f"Deceased: {deceased_count}")
+        print("Graph saved as output.png")
+        
+except FileNotFoundError:
+    print("Error: data.csv file not found")
+except ValueError:
+    print("Error: Survived column not found")
+except Exception as e:
+    print(f"Error: {e}")
+
+print("Task completed: Survival analysis graph generated successfully")

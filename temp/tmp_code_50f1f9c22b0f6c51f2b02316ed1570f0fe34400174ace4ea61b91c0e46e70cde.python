@@ -1,0 +1,22 @@
+import csv
+
+# Read the CSV file to see available columns
+try:
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        header = next(reader)  # Get the header row
+        print("Available columns:", header)
+        
+        # Look for survival-related columns
+        survival_columns = [col for col in header if 'survive' in col.lower() or 'survival' in col.lower()]
+        if survival_columns:
+            print(f"Potential survival columns found: {survival_columns}")
+        else:
+            print("No obvious survival columns found")
+            
+except FileNotFoundError:
+    print("Error: data.csv file not found")
+except Exception as e:
+    print(f"Error reading file: {e}")
+
+print("Task completed: Column analysis completed")

@@ -83,7 +83,8 @@ if task:
     error = asyncio.run(run_analyzer_gpt(docker,openai_model_client,task))
 
     if error:
-        st.error("An error occured :" , {error})
+        st.error(f"An error occurred: {error}")
+
 
     if os.path.exists('temp/output.png'):
         st.image('temp/output.png',caption='Analysis File')

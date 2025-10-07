@@ -1,0 +1,31 @@
+import csv
+
+# Count the number of entries in the CSV file
+entry_count = 0
+
+try:
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        # Count all rows including header
+        for row in reader:
+            entry_count += 1
+        
+        # Subtract 1 if there's a header row
+        print(f"Total entries (including possible header): {entry_count}")
+        
+        # Read again to check if first row is header
+        with open('data.csv', 'r') as file:
+            reader = csv.reader(file)
+            first_row = next(reader)
+            # Try to determine if first row is header (contains strings vs numbers)
+            if any(not cell.replace('.', '').isdigit() for cell in first_row if cell):
+                print(f"Number of data entries (excluding header): {entry_count - 1}")
+            else:
+                print(f"Number of data entries (all rows appear to be data): {entry_count}")
+                
+except FileNotFoundError:
+    print("Error: data.csv file not found")
+except Exception as e:
+    print(f"Error reading file: {e}")
+
+print("Task completed: Entry count calculated successfully")

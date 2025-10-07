@@ -1,0 +1,23 @@
+import pandas as pd
+
+# Load the CSV data
+data = pd.read_csv('data.csv')
+
+# Check column names to identify survival column
+print("Available columns:", data.columns.tolist())
+
+# Assuming survival column is named 'Survived' (common in Titanic datasets)
+if 'Survived' in data.columns:
+    survivors_count = data['Survived'].sum()
+    print(f"Number of people who survived: {survivors_count}")
+else:
+    # If column name is different, try to find it
+    survival_columns = [col for col in data.columns if 'survive' in col.lower() or 'survival' in col.lower()]
+    if survival_columns:
+        survivors_count = data[survival_columns[0]].sum()
+        print(f"Number of people who survived: {survivors_count}")
+    else:
+        print("Could not find survival column in the dataset")
+        print("Available columns:", data.columns.tolist())
+
+print("Task completed: Survival count calculated successfully")

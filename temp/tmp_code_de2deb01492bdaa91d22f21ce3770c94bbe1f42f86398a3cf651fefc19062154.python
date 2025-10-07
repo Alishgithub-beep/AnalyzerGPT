@@ -1,0 +1,44 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the data
+df = pd.read_csv('data.csv')
+
+# Display basic information
+print("First 5 rows:")
+print(df.head())
+print("\nSummary statistics:")
+print(df.describe(include='all'))
+print("\nData types and non-null counts:")
+print(df.info())
+print("\nMissing values per column:")
+print(df.isnull().sum())
+
+# Identify column types
+numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns
+categorical_cols = df.select_dtypes(include=['object', 'category']).columns
+
+# Create visualizations
+plt.figure(figsize=(14, 6))
+
+if len(numeric_cols) > 0:
+    plt.subplot(1, 2, 1)
+    plt.hist(df[numeric_cols[0]].dropna(), bins=15, color='skyblue', edgecolor='black')
+    plt.title(f'Distribution of {numeric_cols[0]}')
+    plt.xlabel(numeric_cols[0])
+    plt.ylabel('Frequency')
+
+if len(categorical_cols) > 0:
+    plt.subplot(1, 2, 2)
+    cat_counts = df[categorical_cols[0]].value_counts().head(10)
+    cat_counts.plot(kind='bar', color='lightgreen')
+    plt.title(f'Top 10 {categorical_cols[0]} Categories')
+    plt.xlabel(categorical_cols[0])
+    plt.ylabel('Count')
+    plt.xticks(rotation=45)
+
+plt.tight_layout()
+plt.savefig('output.png')
+plt.close()
+
+print("\nAnalysis completed. Visualization saved as 'output.png'")

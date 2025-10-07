@@ -1,0 +1,29 @@
+import csv
+
+# Count how many people survived (Survived = 1)
+survivors_count = 0
+
+try:
+    with open('data.csv', 'r') as file:
+        reader = csv.reader(file)
+        header = next(reader)  # Skip header
+        
+        # Find the index of the Survived column
+        header_list = list(header)
+        survived_index = header_list.index('Survived')
+        
+        # Count survivors (where Survived = 1)
+        for row in reader:
+            if len(row) > survived_index and row[survived_index] == '1':
+                survivors_count += 1
+        
+        print(f"Number of people who survived: {survivors_count}")
+        
+except FileNotFoundError:
+    print("Error: data.csv file not found")
+except ValueError:
+    print("Error: Survived column not found")
+except Exception as e:
+    print(f"Error reading file: {e}")
+
+print("Task completed: Survival count calculated successfully")
